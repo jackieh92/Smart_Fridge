@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if current_user.is_authenticated %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6 inventory-list-holder">
+            <h2>Current Fridge Inventory</h2>
+            <h6>| Click on Ingredient for Nutritional Information |</h6>
+            {% for i in query_inventory %}
+            <p class="ingredients margin-top"><b>Ingredient:</b> <a href="{{ url_for('ingredient_detail', ingredient_id = i.id) }}">{{ i.ingredient_col }}</a>
+            <p class="ingredients"><b>Quantity:</b> {{ i.quantity }}</p>
+            {% endfor %}
+        </div>
+        <div class="col-md-3"></div>
+            
+    </div>
+</div>
+
+
+
+
+{% endif %}
+{% endblock content %}

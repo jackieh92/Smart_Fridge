@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if current_user.is_authenticated %}
+<div class="container-fluid">
+    <div class="row margin-top-adjust">
+        <div class="col-md-1"></div>
+        <div class="col-md-4 form-holder">
+            <h1>Add Ingredient</h1>
+            <form action="" method="post">
+                {{ ingredient_form.hidden_tag() }}
+                <div class="form-group">
+                    <fieldset>
+                        {{ ingredient_form.ingredient_input.label(class="margin-top") }}
+                        {{ ingredient_form.ingredient_input(class="form-control", placeholder = "Ingredient") }}
+                    </fieldset>
+                    <fieldset>
+                        {{ ingredient_form.quantity.label(class="margin-top") }}
+                        {{ ingredient_form.quantity(class="form-control", placeholder = "Quantity") }}
+                    </fieldset>
+                    {{ ingredient_form.submit(class="btn btn-primary margin-top") }}
+                </div>
+            </form>
+        </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-5">
+            <h2>Current Fridge Inventory</h2>
+            <h6>| You can add quantity to an item that already exists |</h6>
+            {% for items in updated_items %}
+
+            <div class="col-md-3"></div>
+            <div class="col-md-6 margin-top">
+                <p class="ingredients"><b>Ingredient:</b> {{ items.ingredient_col }}</p><p class="ingredients"><b>Quantity:</b> {{ items.quantity}}</p>
+            </div>
+            <div class="col-md-3"></div>
+
+            {% endfor %}
+        </div>
+
+{% else %}
+<h2>Sorry, you gotta log-in first :)</h2>
+</div>
+</div>
+{% endif %}
+{% endblock content %}

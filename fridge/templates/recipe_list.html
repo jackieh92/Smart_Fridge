@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <p>
+                {{ recipe_id }}
+                <!--<a href="{{ url_for('get_recipes', recipe_id = recipe_id) }}">{{ recipe_titles }}</a> -->
+            </p>
+    </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+        
+{% endblock content %}

@@ -1,0 +1,105 @@
+recipe_form = RecipeSearchForm()
+    input_from_user = recipe_form.ingredient_input_for_recipe.data
+    pasta = requests.get(f'https://api.spoonacular.com/recipes/search?apiKey={key}&cuisine={input_from_user}&number=1')
+    testing = pasta.json()
+    result = testing["results"][0]["title"]
+    print(type(result))
+
+
+
+    <form action="" method="post">
+                {{ recipe_form.hidden_tag() }}
+                <div class="form-group">
+                    <fieldset>
+                        {{ recipe_form.ingredient_input_for_recipe.label(class="margin-top") }}
+                        {{ recipe_form.ingredient_input_for_recipe(class="form-control", placeholder = "Ingredient") }}
+                    </fieldset>
+                    {{ ingredient_form.submit(class="btn btn-primary margin-top") }}
+                </div>
+            </form>
+            <p> {{ result }}</p>
+
+@app.route('/', methods=['GET','POST'])
+def home():
+    recipe_form = RecipeSearchForm()
+    if request.method == 'POST' and form_register.validate():
+        input_from_user = recipe_form.ingredient_input_for_recipe.data
+        pasta = requests.get(f'https://api.spoonacular.com/recipes/search?apiKey=c7542d08532a452ca72aa1cf5db66526&cuisine={input_from_user}&number=1')
+        testing = pasta.json()
+        result = testing["results"][0]["title"]
+    return render_template("home.html", result=result)
+
+    ## for tomorrow: make the route where you can get information from a recipe input and store it into a db
+@app.route('/recipes', methods = ['GET', 'POST'])
+@login_required
+def my_recipes():
+    form_url = UrlForm()
+    user_id = current_user.id
+    if request.method == 'POST' and form_register.validate():
+    url_input = form_url.url.data 
+    recipe_by_input = requests.get(f'https://api.spoonacular.com/recipes/extract?apiKey=c7542d08532a452ca72aa1cf5db66526&url={url_input}&forceExtraction=true&analyze=false&number=1')
+    convert_request = recipe_by_input.json()
+    recipe_title = convert_request[0]["title"]
+    missed_ingredients = convert_request[0]["missedIngredientCount"]
+
+
+    return render_template('recipes.html', recipe_title=recipe_title, missed_ingredients=missed_ingredients)
+
+
+
+
+# Here we are gather the recipe ID and then call upon Get Analyzed Recipe Instructions LIST
+    recipe_id = convert_request[0]["id"]
+    get_recipe_steps = requests.get(f'https://api.spoonacular.com/recipes/{recipe_id}/analyzedInstructions?apiKey=c7542d08532a452ca72aa1cf5db66526&stepBreakdown=false')
+    convert_request_steps = get_recipe_steps.json()
+    recipe_steps_list = []
+    recipe_number_list = []
+    recipe_steps = convert_request_steps[0]["steps"]
+    for i in range(len(recipe_steps)):
+        recipe_steps_list.append(recipe_steps[i]["step"])
+        recipe_number_list.append(recipe_steps[i]["number"])     
+    for x in range(len(recipe_number_list)):
+        show = recipe_number_list[x], recipe_steps_list[x]   
+
+    return render_template('recipes.html', recipe_title=recipe_title, missed_ingredients_string=missed_ingredients_string, show=show)
+
+
+    # Here we are gather the recipe ID and then call upon Get Analyzed Recipe Instructions DICT
+    recipe_id = convert_request[0]["id"]
+    get_recipe_steps = requests.get(f'https://api.spoonacular.com/recipes/{recipe_id}/analyzedInstructions?apiKey=c7542d08532a452ca72aa1cf5db66526&stepBreakdown=false')
+    convert_request_steps = get_recipe_steps.json()
+    recipe_steps_dict = {}
+    recipe_steps = convert_request_steps[0]["steps"]
+    for i in range(len(recipe_steps)):
+        recipe_steps_dict[recipe_steps[i]["number"]]=recipe_steps[i]["step"]
+
+# Here we are listing out the recipes by DICT
+@app.route('/recipe_list', methods = ['GET', 'POST'])
+@login_required
+def recipe_list():
+    user_id = current_user.id
+    current_ingredients = Ingredientlist.query.filter_by(user_id = user_id).all()
+    recipe_by_inventory = requests.get(f'https://api.spoonacular.com/recipes/findByIngredients?apiKey=c7542d08532a452ca72aa1cf5db66526&ingredients={current_ingredients}&number=2')
+    convert_request = recipe_by_inventory.json()
+    extract_request = convert_request
+    print(extract_request)
+    recipe_options_dict = {}
+    for i in range(len(convert_request)):
+        recipe_options_dict[convert_request[i]["id"]] = convert_request[i]["title"]
+    return render_template('recipe_list.html', recipe_options_dict=recipe_options_dict )
+
+# Here we are listing out the recipes by LIST
+@app.route('/recipe_list', methods = ['GET', 'POST'])
+@login_required
+def recipe_list():
+    user_id = current_user.id
+    current_ingredients = Ingredientlist.query.filter_by(user_id = user_id).all()
+    recipe_by_inventory = requests.get(f'https://api.spoonacular.com/recipes/findByIngredients?apiKey=c7542d08532a452ca72aa1cf5db66526&ingredients={current_ingredients}&number=2')
+    convert_request = recipe_by_inventory.json()
+    extract_request = convert_request[0]
+    print(extract_request)
+    recipe_options_list = []
+    for i in range(len(extract_request)):
+        recipe_options_list.append(extract_request[i]["title"])
+       
+    return render_template('recipe_list.html', recipe_options_dict=recipe_options_list )

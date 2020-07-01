@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="background_image">
+    <div class = "container center_home_box">
+        <h1 class="welcome-tag">Welcome {{current_user.username }}!</h2>
+            
+            <p> {{ convert }}</p>
+            
+    </div>
+</div>
+
+<script src="../static/js/main.js"></script>
+
+{% endblock content %}
