@@ -5,11 +5,12 @@
         <div class="col-md-3"></div>
         <div class="col-md-6">
         <p>{{ recipe_title }}</p>
-        <p>Missing Ingredients: {{ missed_ingredients_string }}</p>
+        <p>{{ recipe_summary }}</p>
         <p>Steps:</p>
         {% for key,value in recipe_steps_dict.items() %}
         <p>{{ key }}. {{ value }}</p>
         {% endfor %}
+        {{ names }}
     </div>
         <div class="col-md-3"></div>
     </div>

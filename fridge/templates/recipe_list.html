@@ -5,8 +5,10 @@
         <div class="col-md-3"></div>
         <div class="col-md-6">
             <p>
-                {{ recipe_id }}
-                <!--<a href="{{ url_for('get_recipes', recipe_id = recipe_id) }}">{{ recipe_titles }}</a> -->
+                {% for key,value in recipe_options_dict.items() %}
+                <a href="{{ url_for('get_recipes', recipe_id =  key ) }}">{{ value }}</a>
+                {% endfor %}
+               
             </p>
     </div>
         <div class="col-md-3"></div>

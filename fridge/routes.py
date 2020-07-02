@@ -17,12 +17,8 @@ key = os.environ.get('SPOONACULAR_API')
 
 @app.route('/')
 def home():
-    pasta = requests.get(f'https://api.spoonacular.com/recipes/search?apiKey=d82e2a524d584cd4a578dca7abd8423c&cuisine=italian&number=2')
-    testing = pasta.json()
-    convert=testing["results"]
-      
     
-    return render_template("home.html",convert=convert)
+    return render_template("home.html")
 
 # Here we are listing out the recipes by DICT
 @app.route('/recipe_list', methods = ['GET', 'POST'])
@@ -30,45 +26,39 @@ def home():
 def recipe_list():
     user_id = current_user.id
     current_ingredients = Ingredientlist.query.filter_by(user_id = user_id).all()
-    recipe_by_inventory = requests.get(f'https://api.spoonacular.com/recipes/findByIngredients?apiKey=d82e2a524d584cd4a578dca7abd8423c&ingredients={current_ingredients}&number=2')
-    convert_request = recipe_by_inventory.json()
-    extract_request = convert_request
-    print(extract_request)
+    recipe_by_inventory = requests.get(f'https://api.spoonacular.com/recipes/findByIngredients?apiKey={key}&ingredients={current_ingredients}&number=2')
+    convert_request_recipe_list = recipe_by_inventory.json()
+    extract_request = convert_request_recipe_list
     recipe_options_dict = {}
-    for i in range(len(convert_request)):
-        recipe_options_dict[convert_request[i]["id"]] = convert_request[i]["title"]
+    for i in range(len(convert_request_recipe_list)):
+        recipe_options_dict[convert_request_recipe_list[i]["id"]] = convert_request_recipe_list[i]["title"]
     return render_template('recipe_list.html', recipe_options_dict=recipe_options_dict )
 
-@app.route('/recipes', methods = ['GET', 'POST'])
+@app.route('/recipes/<int:recipe_id>', methods = ['GET', 'POST'])
 @login_required
-def get_recipes():
+def get_recipes(recipe_id):
     user_id = current_user.id
     current_ingredients = Ingredientlist.query.filter_by(user_id = user_id).all()
-
-    recipe_by_inventory = requests.get(f'"https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?apiKey=d82e2a524d584cd4a578dca7abd8423c&ingredients={current_ingredients}&number=1')
+    recipe_by_inventory = requests.get(f'https://api.spoonacular.com/recipes/{recipe_id}/summary?apiKey={key}')
     convert_request = recipe_by_inventory.json()
-    recipe_title = convert_request[0]["title"]
-
-    # For loop to gather names of items that are in missedIngredients
-    missed_ingredients_list = []
-    missed_ingredients = convert_request[0]["missedIngredients"]
-    for i in range(len(missed_ingredients)):
-        missed_ingredients_list.append(missed_ingredients[i]['original'])
-        missed_ingredients_string = " ".join(missed_ingredients_list)
+    recipe_title = convert_request["title"]
 
     # Here we gather the recipe ID and then call upon Get Analyzed Recipe Instructions DICT
-    recipe_id = convert_request[0]["id"]
-    get_recipe_steps = requests.get(f'"https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/{recipe_id}/analyzedInstructions?apiKey=d82e2a524d584cd4a578dca7abd8423c&stepBreakdown=false')
+    get_recipe_steps = requests.get(f'https://api.spoonacular.com/recipes/{recipe_id}/analyzedInstructions?apiKey={key}&stepBreakdown=false')
     convert_request_steps = get_recipe_steps.json()
+    print(convert_request_steps)
     recipe_steps_dict = {}
     recipe_steps = convert_request_steps[0]["steps"]
     for i in range(len(recipe_steps)):
         recipe_steps_dict[recipe_steps[i]["number"]]=recipe_steps[i]["step"]
-
+    
     # Here we gather the amount and name of each ingredient
-
-
-    return render_template('recipes.html', recipe_title=recipe_title, missed_ingredients_string=missed_ingredients_string, recipe_steps_dict=recipe_steps_dict)
+    get_ingredient_names = requests.get(f'https://api.spoonacular.com/recipes/{recipe_id}/ingredientWidget.json?apiKey={key}')
+    convert_ingredient_names = get_ingredient_names.json()
+    names = []
+    for x in range(len(convert_ingredient_names)):
+        names.append(convert_ingredient_names["ingredients"][x]["name"])
+    return render_template('recipes.html', recipe_title=recipe_title, recipe_steps_dict=recipe_steps_dict, names=names)
 
 
 #Register Route

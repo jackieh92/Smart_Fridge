@@ -45,3 +45,4 @@ class Ingredientlist(db.Model):
 
     def __repr__(self):
             return f'The title of the post is {self.ingredient_col} \n and the content is {self.quantity}.'
+

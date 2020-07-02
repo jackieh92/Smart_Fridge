@@ -103,3 +103,32 @@ def recipe_list():
         recipe_options_list.append(extract_request[i]["title"])
        
     return render_template('recipe_list.html', recipe_options_dict=recipe_options_list )
+
+@app.route('/recipes/<int:recipe_id>', methods = ['GET', 'POST'])
+@login_required
+def get_recipes(recipe_id):
+    user_id = current_user.id
+    current_ingredients = Ingredientlist.query.filter_by(user_id = user_id).all()
+    recipe_by_inventory = requests.get(f'https://api.spoonacular.com/recipes/findByIngredients?apiKey=d82e2a524d584cd4a578dca7abd8423c&ingredients={current_ingredients}&number=2')
+    convert_request = recipe_by_inventory.json()
+    recipe_title = convert_request[0]["title"]
+
+    # For loop to gather names of items that are in missedIngredients
+    missed_ingredients_list = []
+    missed_ingredients = convert_request[0]["missedIngredients"]
+    for i in range(len(missed_ingredients)):
+        missed_ingredients_list.append(missed_ingredients[i]['original'])
+        missed_ingredients_string = " ".join(missed_ingredients_list)
+
+    # Here we gather the recipe ID and then call upon Get Analyzed Recipe Instructions DICT
+    #lookup_id = convert_request[0]["id"]
+    get_recipe_steps = requests.get(f'https://api.spoonacular.com/recipes/{recipe_id}/analyzedInstructions?apiKey=d82e2a524d584cd4a578dca7abd8423c&stepBreakdown=false')
+    convert_request_steps = get_recipe_steps.json()
+    print(convert_request_steps)
+    recipe_steps_dict = {}
+    #recipe_steps = convert_request_steps[0]["steps"]
+    #for i in range(len(recipe_steps)):
+    #    recipe_steps_dict[recipe_steps[i]["number"]]=recipe_steps[i]["step"]
+
+    # Here we gather the amount and name of each ingredient
+    return render_template('recipes.html', recipe_title=recipe_title, missed_ingredients_string=missed_ingredients_string, recipe_steps_dict=recipe_steps_dict)
