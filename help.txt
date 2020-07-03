@@ -132,3 +132,30 @@ def get_recipes(recipe_id):
 
     # Here we gather the amount and name of each ingredient
     return render_template('recipes.html', recipe_title=recipe_title, missed_ingredients_string=missed_ingredients_string, recipe_steps_dict=recipe_steps_dict)
+
+     # Here we gather the amount and name of each ingredient
+    get_ingredient_names = requests.get(f'https://api.spoonacular.com/recipes/{recipe_id}/ingredientWidget.json?apiKey=d82e2a524d584cd4a578dca7abd8423c')
+    convert_ingredient_names = get_ingredient_names.json()
+    ingredient_names = convert_ingredient_names["ingredients"]
+    names = []
+    photos = []
+    for x in range(len(ingredient_names)):
+        names.append(ingredient_names[x]["name"])
+        photos.append(ingredient_names[x]["image"])
+    display_names = ", ".join(names)
+
+## pics and names of each ingredient
+    get_ingredient_names = requests.get(f'https://api.spoonacular.com/recipes/{recipe_id}/ingredientWidget.json?apiKey=d82e2a524d584cd4a578dca7abd8423c')
+    convert_ingredient_names = get_ingredient_names.json()
+    ingredient_names = convert_ingredient_names["ingredients"]
+    names = []
+    photos = []
+    for x in range(len(ingredient_names)):
+        names.append(ingredient_names[x]["name"])
+        photos.append(ingredient_names[x]["image"])
+    spoonacular_string = 'https://spoonacular.com/cdn/ingredients_100x100/'
+    appended_photo = [spoonacular_string + image_path for image_path in photos]
+
+    class FavoriteRecipe(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    title = db.Column(db.)

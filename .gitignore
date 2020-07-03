@@ -1,1 +1,5 @@
 app.db
+migrations/
+.env
+env
+help.txt

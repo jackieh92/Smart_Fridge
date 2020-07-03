@@ -26,18 +26,25 @@ def home():
 def recipe_list():
     user_id = current_user.id
     current_ingredients = Ingredientlist.query.filter_by(user_id = user_id).all()
-    recipe_by_inventory = requests.get(f'https://api.spoonacular.com/recipes/findByIngredients?apiKey={key}&ingredients={current_ingredients}&number=2')
+    recipe_by_inventory = requests.get(f'https://api.spoonacular.com/recipes/findByIngredients?apiKey={key}&ingredients={current_ingredients}&number=1')
     convert_request_recipe_list = recipe_by_inventory.json()
     extract_request = convert_request_recipe_list
     recipe_options_dict = {}
+    photos = []
     for i in range(len(convert_request_recipe_list)):
         recipe_options_dict[convert_request_recipe_list[i]["id"]] = convert_request_recipe_list[i]["title"]
-    return render_template('recipe_list.html', recipe_options_dict=recipe_options_dict )
+        photos.append(convert_request_recipe_list[i]["image"])
+    display_photo = "".join(photos)
+
+    return render_template('recipe_list.html', recipe_options_dict=recipe_options_dict, display_photo=display_photo)
+
 
 @app.route('/recipes/<int:recipe_id>', methods = ['GET', 'POST'])
 @login_required
 def get_recipes(recipe_id):
     user_id = current_user.id
+
+    # Recipe Title
     current_ingredients = Ingredientlist.query.filter_by(user_id = user_id).all()
     recipe_by_inventory = requests.get(f'https://api.spoonacular.com/recipes/{recipe_id}/summary?apiKey={key}')
     convert_request = recipe_by_inventory.json()
@@ -46,7 +53,6 @@ def get_recipes(recipe_id):
     # Here we gather the recipe ID and then call upon Get Analyzed Recipe Instructions DICT
     get_recipe_steps = requests.get(f'https://api.spoonacular.com/recipes/{recipe_id}/analyzedInstructions?apiKey={key}&stepBreakdown=false')
     convert_request_steps = get_recipe_steps.json()
-    print(convert_request_steps)
     recipe_steps_dict = {}
     recipe_steps = convert_request_steps[0]["steps"]
     for i in range(len(recipe_steps)):
@@ -55,11 +61,28 @@ def get_recipes(recipe_id):
     # Here we gather the amount and name of each ingredient
     get_ingredient_names = requests.get(f'https://api.spoonacular.com/recipes/{recipe_id}/ingredientWidget.json?apiKey={key}')
     convert_ingredient_names = get_ingredient_names.json()
+    ingredient_names = convert_ingredient_names["ingredients"]
     names = []
-    for x in range(len(convert_ingredient_names)):
-        names.append(convert_ingredient_names["ingredients"][x]["name"])
-    return render_template('recipes.html', recipe_title=recipe_title, recipe_steps_dict=recipe_steps_dict, names=names)
+    photos = []
+    for x in range(len(ingredient_names)):
+        names.append(ingredient_names[x]["name"])
+        photos.append(ingredient_names[x]["image"])
+    spoonacular_string = 'https://spoonacular.com/cdn/ingredients_100x100/'
+    appended_photo = [spoonacular_string + image_path for image_path in photos]
+    image_name_dict = {names[i]: appended_photo[i] for i in range(len(names))}
 
+    # Display Visuals
+    visuals = requests.get(f'https://api.spoonacular.com/recipes/{recipe_id}/information?apiKey={key}&includeNutrition=false')
+    convert_visuals = visuals.json()
+    display_image = convert_visuals["image"]
+
+    return render_template('recipes.html', recipe_title=recipe_title, recipe_steps_dict=recipe_steps_dict, names=names, display_image=display_image, image_name_dict=image_name_dict)
+
+@app.route('/test', methods = ['GET', 'POST'])
+@login_required
+def test():
+
+    return render_template('test.html' )
 
 #Register Route
 @app.route('/register', methods=['GET','POST'])

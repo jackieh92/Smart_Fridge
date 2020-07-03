@@ -8,7 +8,8 @@
                 {% for key,value in recipe_options_dict.items() %}
                 <a href="{{ url_for('get_recipes', recipe_id =  key ) }}">{{ value }}</a>
                 {% endfor %}
-               
+                
+                    <img src="{{ display_photo }}">
             </p>
     </div>
         <div class="col-md-3"></div>

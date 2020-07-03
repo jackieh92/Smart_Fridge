@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block content %}
+{% for key, value in image_name_dict.items() %}
+<p>{{ key }}</p>
+<p>{{ value }} </p>
+{% endfor %}
+{% endblock content %}
