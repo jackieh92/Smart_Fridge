@@ -26,17 +26,11 @@ def home():
 def recipe_list():
     user_id = current_user.id
     current_ingredients = Ingredientlist.query.filter_by(user_id = user_id).all()
-    recipe_by_inventory = requests.get(f'https://api.spoonacular.com/recipes/findByIngredients?apiKey={key}&ingredients={current_ingredients}&number=1')
+    print(current_ingredients)
+    recipe_by_inventory = requests.get(f'https://api.spoonacular.com/recipes/findByIngredients?apiKey=d82e2a524d584cd4a578dca7abd8423c&ingredients={current_ingredients}&number=5')
     convert_request_recipe_list = recipe_by_inventory.json()
-    extract_request = convert_request_recipe_list
-    recipe_options_dict = {}
-    photos = []
-    for i in range(len(convert_request_recipe_list)):
-        recipe_options_dict[convert_request_recipe_list[i]["id"]] = convert_request_recipe_list[i]["title"]
-        photos.append(convert_request_recipe_list[i]["image"])
-    display_photo = "".join(photos)
-
-    return render_template('recipe_list.html', recipe_options_dict=recipe_options_dict, display_photo=display_photo)
+   
+    return render_template('recipe_list.html', convert_request_recipe_list=convert_request_recipe_list)
 
 
 @app.route('/recipes/<int:recipe_id>', methods = ['GET', 'POST'])
@@ -46,20 +40,13 @@ def get_recipes(recipe_id):
 
     # Recipe Title
     current_ingredients = Ingredientlist.query.filter_by(user_id = user_id).all()
-    recipe_by_inventory = requests.get(f'https://api.spoonacular.com/recipes/{recipe_id}/summary?apiKey={key}')
+    recipe_by_inventory = requests.get(f'https://api.spoonacular.com/recipes/{recipe_id}/summary?apiKey=d82e2a524d584cd4a578dca7abd8423c')
     convert_request = recipe_by_inventory.json()
     recipe_title = convert_request["title"]
 
-    # Here we gather the recipe ID and then call upon Get Analyzed Recipe Instructions DICT
-    get_recipe_steps = requests.get(f'https://api.spoonacular.com/recipes/{recipe_id}/analyzedInstructions?apiKey={key}&stepBreakdown=false')
-    convert_request_steps = get_recipe_steps.json()
-    recipe_steps_dict = {}
-    recipe_steps = convert_request_steps[0]["steps"]
-    for i in range(len(recipe_steps)):
-        recipe_steps_dict[recipe_steps[i]["number"]]=recipe_steps[i]["step"]
     
     # Here we gather the amount and name of each ingredient
-    get_ingredient_names = requests.get(f'https://api.spoonacular.com/recipes/{recipe_id}/ingredientWidget.json?apiKey={key}')
+    get_ingredient_names = requests.get(f'https://api.spoonacular.com/recipes/{recipe_id}/ingredientWidget.json?apiKey=d82e2a524d584cd4a578dca7abd8423c')
     convert_ingredient_names = get_ingredient_names.json()
     ingredient_names = convert_ingredient_names["ingredients"]
     names = []
@@ -72,9 +59,20 @@ def get_recipes(recipe_id):
     image_name_dict = {names[i]: appended_photo[i] for i in range(len(names))}
 
     # Display Visuals
-    visuals = requests.get(f'https://api.spoonacular.com/recipes/{recipe_id}/information?apiKey={key}&includeNutrition=false')
+    visuals = requests.get(f'https://api.spoonacular.com/recipes/{recipe_id}/information?apiKey=d82e2a524d584cd4a578dca7abd8423c&includeNutrition=false')
     convert_visuals = visuals.json()
     display_image = convert_visuals["image"]
+
+    # Here we gather the recipe ID and then call upon Get Analyzed Recipe Instructions DICT
+    try:
+        get_recipe_steps = requests.get(f'https://api.spoonacular.com/recipes/{recipe_id}/analyzedInstructions?apiKey=d82e2a524d584cd4a578dca7abd8423c&stepBreakdown=false')
+        convert_request_steps = get_recipe_steps.json()
+        recipe_steps_dict = {}
+        recipe_steps = convert_request_steps[0]["steps"]
+        for i in range(len(recipe_steps)):
+            recipe_steps_dict[recipe_steps[i]["number"]]=recipe_steps[i]["step"]
+    except:
+        return render_template('recipes.html', recipe_title=recipe_title, names=names, display_image=display_image, image_name_dict=image_name_dict)
 
     return render_template('recipes.html', recipe_title=recipe_title, recipe_steps_dict=recipe_steps_dict, names=names, display_image=display_image, image_name_dict=image_name_dict)
 

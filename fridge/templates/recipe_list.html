@@ -1,19 +1,31 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
-            <p>
-                {% for key,value in recipe_options_dict.items() %}
-                <a href="{{ url_for('get_recipes', recipe_id =  key ) }}">{{ value }}</a>
-                {% endfor %}
-                
-                    <img src="{{ display_photo }}">
-            </p>
-    </div>
-        <div class="col-md-3"></div>
+<div class="fluid-container">
+    <div class="row margin-top-adjust">
+        {% for i in range(convert_request_recipe_list|length) %}
+        <div class="col-md-4 margin-top justify">
+                <div class="card-cont">
+                    <div class="card margin-top ">
+                        <img src="{{ convert_request_recipe_list[i]['image'] }}">
+                        <h2>{{ convert_request_recipe_list[i]['title'] }}</h2>
+                        <p class="ingredients margin-top">Missing Ingredients:
+                            {{ convert_request_recipe_list[i]['missedIngredientCount'] }}</p>
+                        <p class="ingredients">Ingredients You Have:
+                            {{ convert_request_recipe_list[i]['usedIngredientCount'] }}</p>
+                        <p class="ingredients">Likes: {{ convert_request_recipe_list[i]['likes'] }}</p>
+                    </div>
+                    <button class="green-button margin-top"><a href="{{ url_for('get_recipes', recipe_id =  convert_request_recipe_list[i]['id']) }}" style="color:white !important;">Get Recipe</a></button>
+                </div>
+            </a>
+        </div>
+
+
+        {% endfor %}
+
+
+
     </div>
 </div>
-        
+
+
 {% endblock content %}

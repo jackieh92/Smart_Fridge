@@ -12,9 +12,13 @@
         <img src="{{ value }}">
         {% endfor %}
         <p>Steps:</p>
+        {% if recipe_steps_dict %}
         {% for key,value in recipe_steps_dict.items() %}
         <p>{{ key }}. {{ value }}</p>
+            {% else %}
+        <p>No Results Found</p>
         {% endfor %}
+        {% endif %}
         
     </div>
         <div class="col-md-3"></div>

@@ -156,6 +156,17 @@ def get_recipes(recipe_id):
     spoonacular_string = 'https://spoonacular.com/cdn/ingredients_100x100/'
     appended_photo = [spoonacular_string + image_path for image_path in photos]
 
-    class FavoriteRecipe(db.Model):
+class FavoriteRecipe(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    title = db.Column(db.)
+    title = db.Column(db.String(200))
+    recipe_id =  db.Column(db.Integer, nullable = False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
+
+    def __init__(self,title, recipe_id, user_id):
+        self.title = title
+        self.recipe_id = recipe_id
+        self.user_id = user_id
+
+    def __repr__(self):
+            return f'The title of the recipe is {self.title} \n and the recipe id is {self.recipe_id}.'
+recipe = db.relationship('FavoriteRecipe', backref = 'favorite', lazy = True)

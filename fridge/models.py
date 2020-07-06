@@ -19,7 +19,7 @@ class User(db.Model,UserMixin):
     email = db.Column(db.String(150), nullable = False, unique = True)
     password = db.Column(db.String(256), nullable = False)
     ingredient = db.relationship('Ingredientlist', backref = 'author', lazy = True)
-
+    
 
     def __init__(self,username,email,password):
         self.username = username
@@ -45,8 +45,5 @@ class Ingredientlist(db.Model):
         self.user_id = user_id
 
     def __repr__(self):
-            return f'The title of the post is {self.ingredient_col} \n and the content is {self.quantity}.'
-
-
-
+            return f'{self.ingredient_col}'
 

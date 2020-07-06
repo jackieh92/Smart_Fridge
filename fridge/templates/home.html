@@ -1,14 +1,29 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="background_image">
-    <div class = "container center_home_box">
-        <h1 class="welcome-tag">Welcome {{current_user.username }}!</h2>
-            
-            <p> {{ convert }}</p>
-            
+
+<div class="fluid-container">
+    <div class="row">
+        <div class="col-md-1">
+            <div class="dot"></div>
+        </div>
+        <div class="col-md-5 header">
+            <div class= "image-container move-right"><img src="../static/images/dish.png"></div>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-4 header-text">
+            <div class="move-left">
+            <h3 class="header-h3">welcome to</h3>
+            <h1 class="header-h1">My Pantry</h1>
+            <h3 class="header-h3-letter-spacing">at any time</h3>
+            <p class="header-paragraph">Quisque lacinia nibh non velit consectetur, in ultricies enim lobortis. 
+                Mauris mollis mattis massa eget gravida. Nulla vulputate fermentum elementum. 
+                Nulla facilisi. Aliquam condimentum ante nec elit ornare blandit.</p>
+                <button class="green-button">Register</button>
+            </div>
+            </div>
     </div>
+
 </div>
 
-<script src="../static/js/main.js"></script>
 
 {% endblock content %}
