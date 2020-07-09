@@ -39,9 +39,9 @@
 
 
     <!-- Brand -->
-    <div class="logo-container">
-    </div>
-    <h1 class="logo-title">Pantry</h1>
+    <a class="nav-link" href="{{ url_for('home') }}"><div class="logo-container">
+    </div></a><h1 class="logo-title">Pantry</h1>
+    
 
 
     <!-- Collapse -->
@@ -56,44 +56,44 @@
       <!-- Left -->
       <ul class="navbar-nav ">
         <li class="nav-item active">
-          <a class="nav-link" href="{{ url_for('home') }}">Home
+          <a class="nav-link font-style" href="{{ url_for('home') }}">Home
             <span class="sr-only">(current)</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('get_ingredients') }}" >Add Ingredients</a>
+          <a class="nav-link font-style" href="{{ url_for('get_ingredients') }}" >Add Ingredients</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('inventory') }}" >My Pantry</a>
+          <a class="nav-link font-style" href="{{ url_for('inventory') }}" >My Pantry</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('recipe_list') }}" >Suggested Recipes</a>
+          <a class="nav-link font-style" href="{{ url_for('recipe_list') }}" >Suggested Recipes</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('register') }}" >Register</a>
+          <a class="nav-link font-style" href="{{ url_for('register') }}" >Register</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('login') }}" >Login</a>
+          <a class="nav-link font-style" href="{{ url_for('login') }}" >Login</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('logout') }}" >Logout</a>
+          <a class="nav-link font-style" href="{{ url_for('logout') }}" >Logout</a>
         </li>
       </ul>
 
       <!-- Right -->
       <ul class="navbar-nav nav-flex-icons">
         <li class="nav-item">
-          <a href="https://www.facebook.com/mdbootstrap" class="nav-link" target="_blank">
+          <a href="#" class="nav-link" target="_blank">
             <i class="fab fa-facebook-f"></i>
           </a>
         </li>
         <li class="nav-item">
-          <a href="https://twitter.com/MDBootstrap" class="nav-link" target="_blank">
+          <a href="#" class="nav-link" target="_blank">
             <i class="fab fa-twitter"></i>
           </a>
         </li>
         <li class="nav-item">
-          <a href="https://github.com/mdbootstrap/bootstrap-material-design" class="nav-link border border-light rounded"
+          <a href="#" class="nav-link border border-light rounded"
             target="_blank">
             <i class="fab fa-github mr-2"></i>MDB GitHub
           </a>

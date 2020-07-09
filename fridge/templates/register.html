@@ -1,42 +1,42 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class=" container center_register_box">
-    <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6"><h1 >Register for a new account.</h1></div>
-        <div class="col-md-3"></div>
-        
-    </div>
+<div class="background-image">
+<div class=" container center_register_box ">
+    
         <!-- Signup Form which comes from Flask Route-->
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
+                <div class="card-register">
         <form action="" method="post">
+            <h1 class = "center login-title" >Register for a new account</h1>
             {{ form_register.hidden_tag() }}
             <div class="form-group">
                 <fieldset>
-                    {{ form_register.username.label(class="margin-top") }}
+                    {{ form_register.username.label(class="margin-top-register") }}
                     {{ form_register.username(class="form-control", placeholder="User Name")}}
                 </fieldset>
                 <fieldset>
-                    {{ form_register.email.label(class="margin-top") }}
+                    {{ form_register.email.label(class="margin-top-register") }}
                     {{ form_register.email(class="form-control", placeholder="Email") }}
                 </fieldset>
                 <fieldset>
-                    {{ form_register.password.label(class="margin-top") }}
+                    {{ form_register.password.label(class="margin-top-register") }}
                     {{ form_register.password(class="form-control", placeholder="Password") }}
                 </fieldset>
                 <fieldset>
-                    {{ form_register.confirm_pass.label(class="margin-top") }}
+                    {{ form_register.confirm_pass.label(class="margin-top-register") }}
                     {{ form_register.confirm_pass(class="form-control", placeholder="Confirm Password") }}
                 </fieldset>
-                {{ form_register.submit(class="btn btn-primary margin-top") }}
+                {{ form_register.submit(class="btn green-button button-margin") }}
             </div>
         </form>
     </div>
+    </div>
     <div class="col-md-3"></div>
     </div>
+</div>
 </div>
 
 {% endblock content %}

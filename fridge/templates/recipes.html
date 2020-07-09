@@ -1,28 +1,49 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container">
+<div class="container margin-top-adjust">
     <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
+        <div class="col-md-12 justify margin-top">
+            <h1>{{ recipe_title }}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 justify margin-top">
             <img src="{{ display_image }}">
-        <p>{{ recipe_title }}</p>
-        <p><b>Ingredients</b></p>
+        </div>
+    </div>
+    <div class="row justify margin-top">
+        <div class="divider"></div>
+    </div>
+    <div class="row justify margin-top">
+        <h2>Ingredients</h2>
+    </div>
+    <div class="row ">
         {% for key, value in image_name_dict.items() %}
-        <p>{{ key }}</p>
-        <img src="{{ value }}">
+        <div class="col-md-3 align-items margin-top justify">
+            <div class="card margin-top change-width-recipe">
+                <img src="{{ value }}">
+                <h6 class="margin-top ingredients">{{ key.title() }}</h6>
+            </div>
+            
+        </div>
         {% endfor %}
-        <p>Steps:</p>
-        {% if recipe_steps_dict %}
-        {% for key,value in recipe_steps_dict.items() %}
-        <p>{{ key }}. {{ value }}</p>
-            {% else %}
-        <p>No Results Found</p>
-        {% endfor %}
-        {% endif %}
-        
     </div>
-        <div class="col-md-3"></div>
+    <div class="row justify margin-top">
+        <div class="divider"></div>
     </div>
+<div class="row">
+    <h2>Cooking Directions</h2>
 </div>
-        
+<div class="row">
+    {% if recipe_steps_dict %}
+    {% for key,value in recipe_steps_dict.items() %}
+    <div class="margin-top"><p class="ingredients">{{ key }}. {{ value }}</p></div>
+    {% else %}
+    <p>No Results Found</p>
+    {% endfor %}
+    {% endif %}
+</div>
+    
+
+</div>
 {% endblock content %}

@@ -5,8 +5,8 @@
     <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6 inventory-list-holder">
-            <h1 class="margin-top">Current Fridge Inventory</h1>
-            <h6 class="subheading">- Click on Ingredient for Nutritional Information -</h6>
+            <h1 class="margin-top">Current Pantry</h1>
+            <h6 class="subheading">- Click on Ingredient for Nutrition Information -</h6>
         </div>
         <div class="col-md-3"></div>
     </div>
@@ -14,7 +14,7 @@
         {% for i in query_inventory %}
         <div class="col-md-3 align-items margin-top justify">
             <div class="card margin-top change-width">
-                <img src="../static/images/produce2.png">
+                <img src="../static/images/placeholder.png">
                 <p class="ingredients margin-top">
                     <b>Ingredient:</b>
                     {{ i.ingredient_col }}
@@ -23,15 +23,12 @@
                     {{ i.quantity }}
                 </p>
                 <a href="{{ url_for('ingredient_detail', ingredient_id = i.id) }}"><button
-                        class="green-button">Nutritional Information</button></a>
+                        class="green-button">Nutrition Information</button></a>
             </div>
         </div>
         {% endfor %}
     </div>
 </div>
-
-
-
 
 {% endif %}
 {% endblock content %}

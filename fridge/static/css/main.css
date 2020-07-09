@@ -15,14 +15,15 @@ p {
     color:#43515c;
 }
 
-/* .background_image {
+ .background-image {
     background-image: linear-gradient(to right bottom, rgba(82, 104, 119, 0.7), rgba(103, 83, 105, 0.6)), url(../images/header.jpeg);
-    height: 95vh;
+    height: 100vh;
     background-attachment: fixed;
     background-position: 35% 50%;
     background-repeat: no-repeat;
     background-size: cover;
-} */
+    margin-top:50px;
+} 
 
 .justify-right {
     justify-content:flex-end;
@@ -35,14 +36,26 @@ p {
     color:white !important;
 }
 
-a {
-    font-family: 'Playfair Display', serif;
-    text-decoration: none !important;
+label {
+    font-family: 'Poppins', sans-serif;
+}
 
+a {
+    font-family: 'Poppins', sans-serif;
+    text-decoration: none !important;
+}
+
+.a-href-adjust > a{
+    color:#43515c !important;
+    margin-top:20px;
 }
 
 .align-right {
     justify-content: flex-end;
+}
+
+.font-style {
+    font-family: 'Playfair Display', serif;
 }
 
 .dot {
@@ -108,7 +121,7 @@ a {
     background-color: #638736;
     border: none;
     color:white;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Poppins', sans-serif;
     border-radius: 20px;
     padding:5px 10px;
     font-weight: 500;
@@ -141,14 +154,16 @@ a {
 
 
 .login-title {
-    color:white;
+    color:#3c3c3c;
 }
 
 .center_register_box {
-    padding:120px 0px;
+    padding:70px 0px;
 }
 
-
+.background {
+    
+}
 
 .form-holder {
     padding:50px ;
@@ -202,13 +217,14 @@ h2,h1,h6 {
 }
 
 .nutrition-form {
-
     margin-top: 200px;
     padding:50px;
+
 }
 
 .curve {
     border-radius: 20px;
+    margin-bottom: 20px;
 }
 
 .logo-container {
@@ -277,10 +293,17 @@ h2,h1,h6 {
     margin-top:20px;
 }
 
-.card {
+ .card {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
     width: 400px;
+    height: 100%;
+    padding: 20px;
+  }
+
+  .card-ingredient {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
     height: 100%;
     padding: 20px;
   }
@@ -312,7 +335,133 @@ h2,h1,h6 {
     height: 1000px;
     width: 500px;
     background-color: #f0be4d;
-    border-radius:600px 0 0 600px ;
+    border-radius: 0 600px 0 600px ;
     top:-100px;
     position: absolute;
   }
+
+  .background-image-ingredient {
+    background-image: linear-gradient(to right bottom, rgba(82, 104, 119, 0.7), rgba(103, 83, 105, 0.6)), url(../images/recipe.png);
+    background-position: 35% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height:100vh;
+
+  }
+
+
+.card-number {
+  margin-top: 15px;
+}
+
+.card-circle {
+  border: 1px solid #444;
+  border-radius: 50%;
+  display: inline-block;
+  line-height: 22px;
+  font-size: 12px;
+  height: 25px;
+  text-align: center;
+  width: 25px;
+}
+
+
+.card-line {
+    border-bottom: #aaa solid 2px;
+    width:90%;
+    align-self: center;
+    display:flex;
+    margin:10px;
+}
+
+.in-card-button {
+    width: 110px;
+    align-self: center;
+    display: flex;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.smaller-title {
+    font-size: 24px;
+    margin: 20px 0;
+}
+.card-shadow {
+    background-color: #fff;
+    box-shadow: 0 2px 25px 2px rgba(0, 0, 0, 1), 0 2px 50px 2px rgba(0, 0, 0, 1), 0 0 100px 3px rgba(0, 0, 0, .25);
+    margin: -40px auto 0;
+    z-index: -1;
+}
+
+.card-modify {
+    width:100% !important;
+    padding:60px;
+    height: 65vh;
+    margin-top:80px;
+}
+
+.arrow-left {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+  }
+  
+
+  .left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+  }
+
+  .margin-right {
+      margin-right: 10px;
+  }
+
+.card-register {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    height: 100%;
+    padding: 40px;
+    font-family: 'Poppins', sans-serif;
+    margin-top:20px;
+    background-color:rgb(250,250,250,.7);
+}
+
+.margin-top-register {
+    margin-top: 25px;
+}
+
+.button-margin {
+    margin-top: 50px;
+}
+
+.register-title {
+    color:white;
+}
+
+.divider {
+    border-bottom: #aaa solid 2px;
+    width:80%;
+    align-self: center;
+    display:flex;
+    margin:40px;
+}
+
+.change-width-recipe {
+    width:100%;
+    justify-content: center;
+}
+
+.change-width-recipe > img {
+    width:40%;
+    margin: 0 auto;
+}
+
+.card-register {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    height: 100%;
+    padding: 40px;
+    font-family: 'Poppins', sans-serif;
+    margin-top:20px;
+    background-color:rgb(250,250,250,.7);
+}

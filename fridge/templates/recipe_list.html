@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+<div class="background">
 <div class="fluid-container">
     <div class="row margin-top-adjust">
         {% for i in range(convert_request_recipe_list|length) %}
@@ -7,16 +8,14 @@
                 <div class="card-cont">
                     <div class="card margin-top ">
                         <img src="{{ convert_request_recipe_list[i]['image'] }}">
-                        <h2>{{ convert_request_recipe_list[i]['title'] }}</h2>
-                        <p class="ingredients margin-top">Missing Ingredients:
-                            {{ convert_request_recipe_list[i]['missedIngredientCount'] }}</p>
-                        <p class="ingredients">Ingredients You Have:
-                            {{ convert_request_recipe_list[i]['usedIngredientCount'] }}</p>
+                        <h2 class="smaller-title">{{ convert_request_recipe_list[i]['title'] }}</h2>
+                        <div class="card-line"></div>
                         <p class="ingredients">Likes: {{ convert_request_recipe_list[i]['likes'] }}</p>
+                        <button class="green-button margin-top in-card-button "><a href="{{ url_for('get_recipes', recipe_id =  convert_request_recipe_list[i]['id']) }}" style="color:white !important; font-family:''Poppins', sans-serif !important;'">Get Recipe</a></button>
                     </div>
-                    <button class="green-button margin-top"><a href="{{ url_for('get_recipes', recipe_id =  convert_request_recipe_list[i]['id']) }}" style="color:white !important;">Get Recipe</a></button>
+                    
+                    <div class="card-shadow"></div>
                 </div>
-            </a>
         </div>
 
 
@@ -25,6 +24,7 @@
 
 
     </div>
+</div>
 </div>
 
 

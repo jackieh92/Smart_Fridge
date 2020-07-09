@@ -27,7 +27,7 @@ def recipe_list():
     user_id = current_user.id
     current_ingredients = Ingredientlist.query.filter_by(user_id = user_id).all()
     print(current_ingredients)
-    recipe_by_inventory = requests.get(f'https://api.spoonacular.com/recipes/findByIngredients?apiKey=d82e2a524d584cd4a578dca7abd8423c&ingredients={current_ingredients}&number=5')
+    recipe_by_inventory = requests.get(f'https://api.spoonacular.com/recipes/findByIngredients?apiKey={key}&ingredients={current_ingredients}&number=4&ranking=1&ignorePantry=true')
     convert_request_recipe_list = recipe_by_inventory.json()
    
     return render_template('recipe_list.html', convert_request_recipe_list=convert_request_recipe_list)
@@ -40,13 +40,13 @@ def get_recipes(recipe_id):
 
     # Recipe Title
     current_ingredients = Ingredientlist.query.filter_by(user_id = user_id).all()
-    recipe_by_inventory = requests.get(f'https://api.spoonacular.com/recipes/{recipe_id}/summary?apiKey=d82e2a524d584cd4a578dca7abd8423c')
+    recipe_by_inventory = requests.get(f'https://api.spoonacular.com/recipes/{recipe_id}/summary?apiKey={key}')
     convert_request = recipe_by_inventory.json()
     recipe_title = convert_request["title"]
 
     
     # Here we gather the amount and name of each ingredient
-    get_ingredient_names = requests.get(f'https://api.spoonacular.com/recipes/{recipe_id}/ingredientWidget.json?apiKey=d82e2a524d584cd4a578dca7abd8423c')
+    get_ingredient_names = requests.get(f'https://api.spoonacular.com/recipes/{recipe_id}/ingredientWidget.json?apiKey={key}')
     convert_ingredient_names = get_ingredient_names.json()
     ingredient_names = convert_ingredient_names["ingredients"]
     names = []
@@ -59,13 +59,13 @@ def get_recipes(recipe_id):
     image_name_dict = {names[i]: appended_photo[i] for i in range(len(names))}
 
     # Display Visuals
-    visuals = requests.get(f'https://api.spoonacular.com/recipes/{recipe_id}/information?apiKey=d82e2a524d584cd4a578dca7abd8423c&includeNutrition=false')
+    visuals = requests.get(f'https://api.spoonacular.com/recipes/{recipe_id}/information?apiKey={key}&includeNutrition=false')
     convert_visuals = visuals.json()
     display_image = convert_visuals["image"]
 
     # Here we gather the recipe ID and then call upon Get Analyzed Recipe Instructions DICT
     try:
-        get_recipe_steps = requests.get(f'https://api.spoonacular.com/recipes/{recipe_id}/analyzedInstructions?apiKey=d82e2a524d584cd4a578dca7abd8423c&stepBreakdown=false')
+        get_recipe_steps = requests.get(f'https://api.spoonacular.com/recipes/{recipe_id}/analyzedInstructions?apiKey={key}&stepBreakdown=false')
         convert_request_steps = get_recipe_steps.json()
         recipe_steps_dict = {}
         recipe_steps = convert_request_steps[0]["steps"]

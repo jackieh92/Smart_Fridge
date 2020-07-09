@@ -1,26 +1,29 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="background_image">
+<div class="background-image">
     <div class="container center_home_box">
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
-                <h1 class="login-title">Login</h1>
-                <form action="" method="post">
-                    {{ form_login.hidden_tag() }}
-                    <div class="form-group">
-                        <fieldset>
-                            {{ form_login.email.label(class="margin-top") }}
-                            {{ form_login.email(class="form-control", placeholder = "Email") }}
-                        </fieldset>
-                        <fieldset>
-                            {{ form_login.password.label(class="margin-top") }}
-                            {{ form_login.password(class="form-control", placeholder="Password") }}
-                        </fieldset>
-                        {{ form_login.submit(class="btn btn-primary button margin-top") }}
-                    </div>
-                </form>
+                
+                <div class="card-register">
+                    <form action="" method="post">
+                        <h1 class="login-title">Login</h1>
+                        {{ form_login.hidden_tag() }}
+                        <div class="form-group">
+                            <fieldset>
+                                {{ form_login.email.label(class="margin-top") }}
+                                {{ form_login.email(class="form-control", placeholder = "Email") }}
+                            </fieldset>
+                            <fieldset>
+                                {{ form_login.password.label(class="margin-top") }}
+                                {{ form_login.password(class="form-control", placeholder="Password") }}
+                            </fieldset>
+                            {{ form_login.submit(class="btn green-button button margin-top") }}
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
