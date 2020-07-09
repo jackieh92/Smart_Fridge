@@ -1,5 +1,6 @@
 app.db
 migrations/
+_pycache__/
 .env
 env
-help.txt
+.vscode/
